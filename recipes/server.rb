@@ -1,14 +1,9 @@
 #
+# Author:: Guilhem Lettron <guilhem.lettron@youscribe.com>
 # Cookbook Name:: jenkins
-# Recipe:: default
+# Recipe:: server
 #
-# Author:: AJ Christensen <aj@junglist.gen.nz>
-# Author:: Doug MacEachern <dougm@vmware.com>
-# Author:: Fletcher Nichol <fnichol@nichol.ca>
-# Author:: Seth Chisamore <schisamo@opscode.com>
-#
-# Copyright 2010, VMware, Inc.
-# Copyright 2012, Opscode, Inc.
+# Copyright 2013, Youscribe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +19,6 @@
 #
 
 include_recipe "java"
-include_recipe "runit"
 
 user node['jenkins']['server']['user'] do
   home node['jenkins']['server']['home']
@@ -59,18 +53,7 @@ node['jenkins']['server']['plugins'].each do |name|
   end
 end
 
-runit_service "jenkins" do
-  action :enable
-end
-
-remote_file File.join(home_dir, "jenkins.war") do
-  source "#{node['jenkins']['mirror']}/war/#{node['jenkins']['server']['version']}/jenkins.war"
-  checksum node['jenkins']['server']['war_checksum'] unless node['jenkins']['server']['war_checksum'].nil?
-  owner node['jenkins']['server']['user']
-  group node['jenkins']['server']['group']
-  notifies :restart, "runit_service[jenkins]", :immediately
-  notifies :create, "ruby_block[block_until_operational]", :immediately
-end
+include_recipe "jenkins::server_#{node['jenkins']['server']['install_method']}"
 
 ruby_block "block_until_operational" do
   block do
@@ -105,6 +88,10 @@ log "plugins updated, restarting jenkins" do
     end
   end
   action :nothing
-  notifies :restart, "runit_service[jenkins]", :immediately
+  if node['jenkins']['server']['init'] == "runit"
+    notifies :restart, "runit_service[jenkins]", :immediately
+  else
+    notifies :restart, "service[jenkins]", :immediately
+  end
   notifies :create, "ruby_block[block_until_operational]", :immediately
 end
