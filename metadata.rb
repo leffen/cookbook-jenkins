@@ -8,6 +8,8 @@ version          "0.8.0"
 
 depends "java"
 depends "runit", ">= 1.0.0"
+depends "apt"
+depends "yum"
 
 depends "apache2"
 depends "nginx"
