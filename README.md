@@ -3,6 +3,9 @@ Description
 
 This is a massive simplification/refactor of the original [jenkins cookbook](http://community.opscode.com/cookbooks/jenkins). This README will be rewritten before the next release.
 
+[Leffen]
+Adding stuff from https://github.com/pivotal/ciborg fro better adoption to ubuntu servers
+
 Requirements
 ============
 
