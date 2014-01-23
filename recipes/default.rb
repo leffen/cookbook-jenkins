@@ -22,4 +22,5 @@ include_recipe "jenkins::server"
 include_recipe "jenkins::fonts"
 include_recipe "jenkins::id_rsa"
 include_recipe "jenkins::git_config"
+include_recipe "jenkins::rbenv"
 

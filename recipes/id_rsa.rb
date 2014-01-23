@@ -7,6 +7,18 @@ directory "#{home_dir}/.ssh" do
   owner "jenkins"
 end
 
+chef_gem 'httparty'
+
+# create their ssh key
+execute 'generate ssh key for deploy' do
+  user 'deploy'
+  creates '/home/deploy/.ssh/id_rsa'
+  command 'ssh-keygen -t rsa -q -f /home/deploy/.ssh/id_rsa -P ""'
+  notifies :create, "ruby_block[add_ssh_key_to_bitbucket]"
+  notifies :run, "execute[add_bitbucket_to_known_hosts]"
+end
+
+
 execute "copy id_rsa" do
   destination_path = "#{home_dir}/.ssh/id_rsa"
   source_path = "/home/#{username}/.ssh/id_rsa"

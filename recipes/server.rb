@@ -20,11 +20,19 @@
 
 include_recipe "java"
 
-user node['jenkins']['server']['user'] do
-  home node['jenkins']['server']['home']
+home_dir = node['jenkins']['server']['home']
+user_name =  node['jenkins']['server']['user']
+group = node['jenkins']['server']['group']
+
+user user_name do
+  home home_dir
+  group group
+  shell '/bin/bash'
+
+  supports :manage_home => true
+  action :create
 end
 
-home_dir = node['jenkins']['server']['home']
 data_dir = node['jenkins']['server']['data_dir']
 plugins_dir = File.join(node['jenkins']['server']['data_dir'], "plugins")
 log_dir = node['jenkins']['server']['log_dir']
