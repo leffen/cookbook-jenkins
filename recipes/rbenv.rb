@@ -35,12 +35,13 @@ jruby_packages =  %w{ make g++ }
   package pkg
 end
 
-['2.0.0-p353','1.9.3-p448', '1.9.3-p327', 'jruby-1.7.1', 'jruby-1.7.2', 'jruby-1.6.7.2'].each do |rubie|
+['2.1.0','2.0.0-p353','1.9.3-p484', 'jruby-1.7.2'].each do |rubie|
   bash "ruby-build #{rubie}" do
     user user_name
     group group
     code <<CMD
 export PATH="#{home_dir}/.rbenv/bin:$PATH"
+export RBENV_ROOT="#{home_dir}/.rbenv"
 eval "$(rbenv init -)"
 rbenv install #{rubie}
 CMD
