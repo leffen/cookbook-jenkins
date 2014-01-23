@@ -45,7 +45,7 @@ export RBENV_ROOT="#{home_dir}/.rbenv"
 eval "$(rbenv init -)"
 rbenv install #{rubie}
 CMD
-    not_if { File.exist?("#{home_dir}/.rbenv/versions/#{rubie}") || File.exist?("/opt/rbenv/versions/#{rubie}") }
+    not_if { File.exist?("#{home_dir}/.rbenv/versions/#{rubie}") }
     environment ({'HOME' => home_dir})
   end
 end
