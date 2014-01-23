@@ -19,7 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe "nginx::source"
 
 if node['jenkins']['http_proxy']['www_redirect'] == "enable"
   www_redirect = true
@@ -47,14 +46,3 @@ template "#{node['nginx']['dir']}/sites-available/jenkins.conf" do
   end
 end
 
-nginx_site "000-default" do
-  enable  false
-end
-
-nginx_site "jenkins.conf" do
-  if node['jenkins']['http_proxy']['variant'] == "nginx"
-    enable true
-  else
-    enable false
-  end
-end
