@@ -35,7 +35,10 @@ jruby_packages =  %w{ make g++ }
   package pkg
 end
 
-['2.1.0','2.0.0-p353','1.9.3-p484', 'jruby-1.7.2'].each do |rubie|
+# extendedsuggestion ['2.1.0','2.0.0-p353','1.9.3-p484', 'jruby-1.7.2']
+rubies = ['jenkins']['rbenv']['rubies'] || ['2.0.0-p353']
+
+rubies.each do |rubie|
   bash "ruby-build #{rubie}" do
     user user_name
     group group

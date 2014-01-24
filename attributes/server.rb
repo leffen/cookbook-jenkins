@@ -63,3 +63,5 @@ default['jenkins']['http_proxy']['basic_auth_username'] = "jenkins"
 default['jenkins']['http_proxy']['basic_auth_password'] = "jenkins"
 default['jenkins']['http_proxy']['cas_validate_server'] = "off"
 default['jenkins']['http_proxy']['server_auth_method'] = nil
+
+default['jenkins']['rbenv']['rubies']=['2.0.0-p353']
