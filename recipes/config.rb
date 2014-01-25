@@ -42,12 +42,14 @@ config_files = {
 }
 
 config_files.each_pair do |config_file, config|
-  template "#{home_dir}/#{config_file}.xml" do
+  file_name = "#{home_dir}/#{config_file}.xml"
+  template file_name do
     source "configs/#{config_file}.xml.erb"
     owner user_name
     group group
     mode 0644
     variables(config)
+    not_if { ::File.exists?(file_name) }
   end
 end
 
