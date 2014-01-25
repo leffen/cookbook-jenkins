@@ -62,7 +62,10 @@ node['jenkins']['server']['plugins'].each do |name|
 end
 
 
-notifies :restart, "service[jenkins]"
+log "restarting jenkins" do
+  action :nothing
+  notifies :restart, "service[jenkins]"
+end
 
 include_recipe "jenkins::server_#{node['jenkins']['server']['install_method']}"
 
