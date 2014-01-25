@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.tasks.Mailer_-DescriptorImpl>
+  <helpRedirect/>
+  <hudsonUrl><%= @hudson_url %></hudsonUrl>
+  <adminAddress><%= @admin_email %></adminAddress>
+  <replyToAddress><%= @reply_to_address %></replyToAddress>
+  <smtpHost><%= @smtp_host %></smtpHost>
+  <useSsl>false</useSsl>
+  <smtpPort><%= @smtp_port || 25 %></smtpPort>
+  <charset>UTF-8</charset>
+  <% unless @smtp_auth_password.nil? then %>
+    <smtpAuthUsername><%= @smtp_auth_username %></smtpAuthUsername>
+    <smtpAuthPassword><%= @smtp_auth_password %></smtpAuthPassword>
+  <% end %>
+</hudson.tasks.Mailer_-DescriptorImpl>

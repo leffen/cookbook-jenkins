@@ -9,6 +9,12 @@ end
 
 chef_gem 'httparty'
 
+file "#{home_dir}/.ssh/known_hosts" do
+  mode 0600
+  owner "jenkins"
+end
+
+
 # create their ssh key
 execute 'generate ssh key for deploy' do
   user username
@@ -24,16 +30,12 @@ file "#{home_dir}/.ssh/id_rsa" do
   group group
 end
 
-file "#{home_dir}/.ssh/known_hosts" do
-  mode 0600
-  owner "jenkins"
-end
 
 
 # add bitbucket.org to known hosts, so future deploys won't be interrupted
 execute "add_bitbucket_to_known_hosts" do
   action :nothing # only run when ssh key is created
-  user 'deploy'
+  user username
   command "ssh-keyscan -H bitbucket.org >> #{home_dir}/.ssh/known_hosts"
   notifies :run, "execute[add_bitbucket_to_known_hosts]"
 end
@@ -41,7 +43,7 @@ end
 # add github.com to known hosts, so future deploys won't be interrupted
 execute "add_github_to_known_hosts" do
   action :nothing # only run when ssh key is created
-  user 'deploy'
+  user username
   command "ssh-keyscan -H github.com >> #{home_dir}/.ssh/known_hosts"
 end
 

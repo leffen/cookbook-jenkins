@@ -65,3 +65,8 @@ default['jenkins']['http_proxy']['cas_validate_server'] = "off"
 default['jenkins']['http_proxy']['server_auth_method'] = nil
 
 default['jenkins']['rbenv']['rubies']=['2.0.0-p353']
+
+default['jenkins']['smtp']['host']=''
+default['jenkins']['smtp']['port']=''
+default['jenkins']['smtp']['password']=''
+default['jenkins']['smtp']['username']=''
