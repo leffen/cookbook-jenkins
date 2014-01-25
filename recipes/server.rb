@@ -61,6 +61,9 @@ node['jenkins']['server']['plugins'].each do |name|
   end
 end
 
+
+notifies :restart, "service[jenkins]"
+
 include_recipe "jenkins::server_#{node['jenkins']['server']['install_method']}"
 
 ruby_block "block_until_operational" do
