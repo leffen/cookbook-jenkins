@@ -1,5 +1,8 @@
 
 
+home_dir = node['jenkins']['server']['home']
+user_name =  node['jenkins']['server']['user']
+group = node['jenkins']['server']['group']
 
 jenkins_url = node['jenkins']['server']['url']
 admin_email = node['jenkins']['server']['admin-email']
@@ -40,14 +43,16 @@ config_files = {
 }
 
 config_files.each_pair do |config_file, config|
-  config.merge!('source' => "configs/#{config_file}.xml.erb")
-  config.merge!('cookbook' => "cookbook-jenkins")
+  template "#{home_dir}/#{config_file}.xml" do
+    source "configs/#{config_file}.xml.erb"
+    owner user_name
+    group group
+    mode 0644
+    variables(config)
+  end
 end
 
-jenkins_config_set "config_set" do
-  private_key node['jenkins']['private_key'] if node['jenkins']['private_key']
-  configs config_files
-end
+
 
 
 log "restarting jenkins" do
