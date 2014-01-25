@@ -70,3 +70,10 @@ default['jenkins']['smtp']['host']=''
 default['jenkins']['smtp']['port']=''
 default['jenkins']['smtp']['password']=''
 default['jenkins']['smtp']['username']=''
+
+default['jenkins']['capybara_webkit']['packages'] =  %w{ openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev
+                                                          libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev
+                                                          libc6-dev ssl-cert libqt4-dev make g++  qt5-default qttools5-dev-tools
+                                                          libqt5webkit5-dev qtquick1-5-dev qtlocation5-dev qtsensors5-dev qtdeclarative5-dev}
+
+

@@ -12,7 +12,6 @@ list_id = node['jenkins']['server']['host']
 config_files = {
     'hudson.plugins.ansicolor.AnsiColorBuildWrapper' => {},
     'jenkins.model.JenkinsLocationConfiguration' =>  {'jenkins_url' => jenkins_url, 'admin_email' => admin_email},
-    'com.cloudbees.jenkins.GitHubPushTrigger' => {},
     'hudson.maven.MavenModuleSet' => {},
     'hudson.model.UpdateCenter' => {},
     'hudson.plugins.emailext.ExtendedEmailPublisher' =>
