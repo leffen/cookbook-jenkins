@@ -16,7 +16,7 @@ config_files = {
     'hudson.model.UpdateCenter' => {},
     'hudson.plugins.emailext.ExtendedEmailPublisher' =>
         {
-            'jenkins_url' => "#{jenkins_url}/",
+            'jenkins_url' => jenkins_url,
             'admin_email' => admin_email,
             'list_id' => list_id
         },
