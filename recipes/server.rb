@@ -44,11 +44,26 @@ log_dir = node['jenkins']['server']['log_dir']
   log_dir
 ].each do |dir_name|
   directory dir_name do
-    owner node['jenkins']['server']['user']
-    group node['jenkins']['server']['group']
+    owner user_name
+    group group
     mode '0700'
     recursive true
   end
+end
+
+
+# Install update center json before attempting to install plugins
+directory "#{home_dir}/updates/" do
+  owner user_name
+  group group
+  action :create
+end
+
+execute "update jenkins update center" do
+  command "wget http://updates.jenkins-ci.org/update-center.json -qO- | sed '1d;$d'  > #{home_dir}/updates/default.json"
+  user user_name
+  group group
+  creates "#{home_dir}/updates/default.json"
 end
 
 node['jenkins']['server']['plugins'].each do |name|

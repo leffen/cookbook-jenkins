@@ -29,7 +29,7 @@ end
 
 host_name = node['jenkins']['http_proxy']['host_name'] || node['fqdn']
 
-template "#{node['nginx']['dir']}/sites-available/jenkins.conf" do
+template "#{node['nginx']['dir']}/sites-enabled/jenkins.conf" do
   source      "nginx_jenkins.conf.erb"
   owner       'root'
   group       'root'

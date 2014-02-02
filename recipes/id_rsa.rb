@@ -7,7 +7,7 @@ directory "#{home_dir}/.ssh" do
   owner "jenkins"
 end
 
-chef_gem 'httparty'
+# chef_gem 'httparty'
 
 file "#{home_dir}/.ssh/known_hosts" do
   mode 0600
@@ -19,7 +19,7 @@ end
 execute 'generate ssh key for deploy' do
   user username
   creates "/#{home_dir}/.ssh/id_rsa"
-  command "ssh-keygen -t rsa -q -f #{home_dir}/.ssh/id_rsa -C 'jenkins@#{node['fqdn']}'"
+  command "ssh-keygen -t rsa -q -f #{home_dir}/.ssh/id_rsa -N '' -C 'jenkins@#{node['fqdn']}'"
 #  notifies :create, "ruby_block[add_ssh_key_to_bitbucket]"
   notifies :run, "execute[add_bitbucket_to_known_hosts]"
 end
