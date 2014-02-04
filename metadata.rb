@@ -13,5 +13,5 @@ depends "yum"
 depends 'rbenv'
 
 #depends "apache2"
-#depends "nginx"
+depends "nginx"
 #depends "iptables"
