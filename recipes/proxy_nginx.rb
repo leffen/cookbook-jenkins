@@ -19,7 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe "nginx::default"
 
 if node['jenkins']['http_proxy']['www_redirect'] == "enable"
   www_redirect = true
@@ -29,7 +28,7 @@ end
 
 host_name = node['jenkins']['http_proxy']['host_name'] || node['fqdn']
 
-template "#{node['nginx']['dir']}/sites-enabled/jenkins.conf" do
+template "#{node['nginx']['dir']}/sites-available/jenkins" do
   source      "nginx_jenkins.conf.erb"
   owner       'root'
   group       'root'
@@ -42,8 +41,21 @@ template "#{node['nginx']['dir']}/sites-enabled/jenkins.conf" do
     :max_upload_size  => node['jenkins']['http_proxy']['client_max_body_size']
   )
 
-  if File.exists?("#{node['nginx']['dir']}/sites-enabled/jenkins.conf")
-    notifies  :restart, 'service[nginx]'
-  end
 end
+
+#template "#{node['nginx']['dir']}/conf.d/jenkins.conf" do
+#  source      "nginx_extra.conf.erb"
+#  owner       'root'
+#  group       'root'
+#  mode        '0644'
+#end
+
+
+include_recipe 'nginx'
+
+nginx_site 'jenkins' do
+  enable true
+end
+
+
 
